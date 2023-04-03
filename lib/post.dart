@@ -1,31 +1,33 @@
-class Post {
-  int postId;
-  int id;
-  String title;
-  String body;
+import 'dart:convert';
 
+Post postFromJson(String str) => Post.fromJson(json.decode(str));
+
+String postToJson(Post data) => json.encode(data.toJson());
+
+class Post {
   Post({
-    required this.postId,
+    required this.userId,
     required this.id,
     required this.title,
     required this.body,
   });
 
-  factory Post.fromJson(Map<String, dynamic> json) { // factory는 메모리에 있으면 새로 만들지 않음
-    return Post(
-      postId: json['userId'],
-      id: json['id'],
-      title: json['title'],
-      body: json['body'],
-    );
-  }
+  int userId;
+  int id;
+  String title;
+  String body;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'userId': postId,
-      'id': id,
-      'title': title,
-      'body': body,
-    };
-  }
+  factory Post.fromJson(Map<String, dynamic> json) => Post(
+    userId: json["userId"],
+    id: json["id"],
+    title: json["title"],
+    body: json["body"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "userId": userId,
+    "id": id,
+    "title": title,
+    "body": body,
+  };
 }

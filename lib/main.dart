@@ -41,11 +41,12 @@ class MyApp extends ConsumerWidget {
     // ref.read를 하면 한번만 읽으므로 초기화면에서 바뀌지 않는다.
 
     return MaterialApp(
-      home: HomePage2(),
+      home:
+      HomePage2(),
       // Scaffold(
       //   appBar: AppBar(title: const Text('Example')),
       //   body: Center(
-      //     child: Text(value.toString()),
+      //     child: Text(value.toString(), style: TextStyle(fontSize: 100),),
       //   ),
       //   floatingActionButton: FloatingActionButton(
       //     onPressed: (){
@@ -111,7 +112,6 @@ class HomePage2 extends StatelessWidget {
                       );
                     },
                   );
-
                 } else {
                   return CircularProgressIndicator();
                 }

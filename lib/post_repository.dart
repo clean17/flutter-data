@@ -7,7 +7,7 @@ class PostRepository {
   Future<Post> findById(int id) async {
     Response responseFT = await dio.get("https://jsonplaceholder.typicode.com/posts/$id");
     Map<String, dynamic> responseMap = responseFT.data;
-    print(responseMap["userId"]);
+    // print(responseMap["userId"]);
     Post post = Post.fromJson(responseFT.data); // Map으로 매핑된 데이터를 유저 오브젝트로 변환
     return post;
   }
@@ -15,7 +15,7 @@ class PostRepository {
   Future<Post> findById2(int id) async {
     Response responseFT = await dio.get("https://jsonplaceholder.typicode.com/posts/$id");
     Map<String, dynamic> responseMap = responseFT.data;
-    print(responseMap["userId"]);
+    // print(responseMap["userId"]);
     Post post = Post.fromJson(responseFT.data); // Map으로 매핑된 데이터를 유저 오브젝트로 변환
     return post;
   }
@@ -27,7 +27,7 @@ class PostRepository {
 
   Future<void> findAll() async {
     Response responseFT = await dio.get("https://jsonplaceholder.typicode.com/posts");
-    print(responseFT.data);
+    // print(responseFT.data);
   }
 
   Future<List<Post>> findAll2() async {
