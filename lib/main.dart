@@ -72,27 +72,37 @@ class HomePage2 extends StatelessWidget {
         children: [
           Expanded(
             child: FutureBuilder(
-              future: PostRepository().findById(1), // 퓨처를 받은뒤 다 받으면 빌더
+              future: PostRepository().findById(1),
               builder: (context, snapshot) {
-                if(snapshot.hasData){
+                if (snapshot.hasData) {
                   print("데이터 있음");
                   Post post = snapshot.data!;
-                  return Text("${post.title}");
-                }else{
+                  return Center(child: Text("${post.title}", style: TextStyle(
+                    fontSize: 30,
+                  ),));
+                } else {
                   print("데이터 없음");
                   return CircularProgressIndicator();
                 }
-
               },
-            ),),
+            ),
+          ),
+
           Expanded(
             child: FutureBuilder(
               future: PostRepository().findAll2(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   List<Post> postList = snapshot.data!;
-                  return ListView.builder(
-                    itemCount: 3,
+                  return ListView.separated(
+                    itemCount: postList.length,
+                    separatorBuilder: (context, index) {
+                      return Divider(
+                        color: Colors.grey,
+                        height: 1,
+                        thickness: 1,
+                      );
+                    },
                     itemBuilder: (context, index) {
                       return ListTile(
                         leading: Icon(Icons.ac_unit_outlined),
@@ -101,6 +111,7 @@ class HomePage2 extends StatelessWidget {
                       );
                     },
                   );
+
                 } else {
                   return CircularProgressIndicator();
                 }
