@@ -1,3 +1,5 @@
+import 'package:data_app/post.dart';
+import 'package:data_app/post_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -39,19 +41,78 @@ class MyApp extends ConsumerWidget {
     // ref.read를 하면 한번만 읽으므로 초기화면에서 바뀌지 않는다.
 
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Example')),
-        body: Center(
-          child: Text(value.toString()),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            ref.read(counterProvider.notifier).increment(); // notifier는 StateNotifier를 구현하는 객체
-            // notifier는 변경 불가능한 일반적인 Provider와 달리 상태를 변경하는 Provider를 생성한다.
-          },
-          child: Icon(Icons.add),
-        ),
+      home: HomePage2(),
+      // Scaffold(
+      //   appBar: AppBar(title: const Text('Example')),
+      //   body: Center(
+      //     child: Text(value.toString()),
+      //   ),
+      //   floatingActionButton: FloatingActionButton(
+      //     onPressed: (){
+      //       ref.read(counterProvider.notifier).increment(); // notifier는 StateNotifier를 구현하는 객체
+      //       // notifier는 변경 불가능한 일반적인 Provider와 달리 상태를 변경하는 Provider를 생성한다.
+      //     },
+      //     child: Icon(Icons.add),
+      //   ),
+      // ),
+    );
+  }
+}
+
+
+
+class HomePage2 extends StatelessWidget {
+  const HomePage2({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    print("나도 실행");
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: FutureBuilder(
+              future: PostRepository().findById(1), // 퓨처를 받은뒤 다 받으면 빌더
+              builder: (context, snapshot) {
+                if(snapshot.hasData){
+                  print("데이터 있음");
+                  Post post = snapshot.data!;
+                  return Text("${post.title}");
+                }else{
+                  print("데이터 없음");
+                  return CircularProgressIndicator();
+                }
+
+              },
+            ),),
+          Expanded(
+            child: FutureBuilder(
+              future: PostRepository().findAll2(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<Post> postList = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: Icon(Icons.ac_unit_outlined),
+                        title: Text("${postList[index].title}"),
+                        subtitle: Text("${postList[index].body}"),
+                      );
+                    },
+                  );
+                } else {
+                  return CircularProgressIndicator();
+                }
+              },
+            ),
+          )
+        ],
       ),
     );
   }
 }
+
+
+
+
